@@ -56,7 +56,15 @@ with column1:
   youtube
   #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   channel_id=channel_id_st
-  #channel_id='UCJ6P61X1PyNHNEVJAib9O-w'
+  #channel_ids='UCJ6P61X1PyNHNEVJAib9O-w'
+         #   'UCME-uQDMlInGIFuC0-9ZrgQ'  #budget food
+         #   'UCSD9KLluwMBdhtLI6NaL61A'  #imperfect trader
+         #   'UCB2XQ5q22gU0AWwdN24g15Q'  #foodie prabhu
+         #   'UChZf0LwrgjL81hoAynd5RJA'  #village database
+         #   'UCEfY31ZQGeF3yu6L8N45VTw'  #namaste car
+         #   'UCtjxa77NqamhVC8atV85Rog'  #ict
+         #   'UCnjU1FHmao9YNfPzE039YTw'  #irfans
+         #   'UCFIMNZ4aScoB7OcIPCshvGw'  #tamil veedu
   #---------------------------------------------------------------------------------------Function for getting channel details------------------------------------------------------------------------------------------------------------------------------
   #from that channel id we get the channel data
   def get_channel_details(youtube,channel_id):
