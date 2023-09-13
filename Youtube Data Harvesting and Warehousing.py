@@ -27,7 +27,7 @@ st.set_page_config(page_title='Youtube project by Ragul',layout='wide')
 st.title('you:red[Tube] Data:red[Harvesting] and :red[Warehousing]')
 st.markdown(f"In This  Project we would get YouTube Channel data from YouTube API with the help of 'Channel ID' , We Will Store the channel data into Mongo DB Atlas as a Document then the data Would convert into Sql Records for Data Analysis. This Entire Project based on Extract Transform Load Process(ETL) and EDA")
 
-
+#========================================================================================Data Collection Zone========================================================================================================================
 #Creating columns for Data collection and Data Migration-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 column1,column2=st.columns(2)
@@ -272,7 +272,7 @@ def tables():
         return ("done")
 tables()
 
-
+#========================================================================================Data Migration Zone===========================================================================================================================
 #----------------------------------------------------------------------------------------------------Connecting column-2 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 with column2:
   st.header(':blue[Data Migrate Zone]')
@@ -361,11 +361,12 @@ with column2:
           ragul.commit() 
     return st.write("Data Migrate successfully",icon="✅")
   sql(channel_data,playlist_data,video_data,comment_data)
-#Connecting MongoDB database--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#========================================================================================Data Analysis Zone=============================================================================================================================
+#----------------------------------------------------------------------------------------Getting answers --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 st.header(':blue[Data Analysis Zone]')
 st.write('Here we analyze the collection of data which is structured in SQL and display it in a table format')
 
-#Connecting MongoDB database--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Creating function for questions----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def qus():
     choice=st.subheader(":red[Data analysis option]")
     options =["What are the Names of all the videos and their corresponding channels?",
