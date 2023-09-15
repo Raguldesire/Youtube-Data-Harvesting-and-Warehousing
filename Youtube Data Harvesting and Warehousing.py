@@ -1,21 +1,21 @@
-Api_key='AIzaSyBkl2QHaJxme7bjucnizd9xOMe51F981Yc'
-
+#Importing Libraries----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 import pymongo
 import psycopg2
 import pandas as pd
 import streamlit as st
 from googleapiclient.discovery import build
 import isodate
-
-
+#Importing Youtube API ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Api_key='AIzaSyBkl2QHaJxme7bjucnizd9xOMe51F981Yc'
 api_service_name="youtube"
 api_version="v3"
 youtube = build(api_service_name, api_version, developerKey=Api_key)
 
-ragul =psycopg2.connect(host='localhost',user='postgres',password='ragul',port=5432,database='youtube project')
+#Connecting PostgreSQL----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ragul =psycopg2.connect(host='localhost',user='postgres',password='****',port=5432,database='youtube project')
 cursor=ragul.cursor()
 
-
+#Function for duration----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def format_duration(duration):
     duration_obj = isodate.parse_duration(duration)
     hours = duration_obj.total_seconds() // 3600
@@ -24,8 +24,8 @@ def format_duration(duration):
     formatted_duration = f"{int(hours):02d}:{int(minutes):02d}:{int(seconds):02d}"
     return formatted_duration
 
-
-def get_channel_sts(youtube,channel_id):
+#Getting channel details----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def get_channel_details(youtube,channel_id):
   
   request=youtube.channels().list(
       part="snippet,contentDetails,statistics",
@@ -45,8 +45,8 @@ def get_channel_sts(youtube,channel_id):
   return data
 
 
-
-def get_playlists(youtube,channel_id):
+#Getting Playlist details----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def get_playlists_details(youtube,channel_id):
   request = youtube.playlists().list(
         part="snippet,contentDetails",
         channelId=channel_id,
@@ -85,7 +85,7 @@ def get_playlists(youtube,channel_id):
           next_page_token = response.get('nextPageToken')
   return All_data
 
-
+#Getting Video ids----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def get_video_ids(youtube, playlist_id):
   request = youtube.playlistItems().list(
                 part='contentDetails',
@@ -119,7 +119,7 @@ def get_video_ids(youtube, playlist_id):
 
   return video_ids
 
-
+#Getting Video details----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def get_video_detail(youtube, video_id):
 
         request = youtube.videos().list(
@@ -148,7 +148,7 @@ def get_video_detail(youtube, video_id):
                         video_info[v] = None
         return (video_info)
 
-
+#Getting Comment details----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def get_comments_in_videos(youtube, video_id):
     all_comments = []
     try:   
@@ -172,19 +172,19 @@ def get_comments_in_videos(youtube, video_id):
     
     return all_comments
 
-
+#Connecting MongoDB----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 client=pymongo.MongoClient('mongodb+srv://ragul_s:raguldesire@cluster0.l7eucom.mongodb.net/?retryWrites=true&w=majority') #copy the link from mongodb altas to establish connection and enter your password
 
 db=client["warehousing"]
 col=db["Channels"]
 
 @st.cache_data
-
+#Importing in MongoDB----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def channel_Details(channel_id):
-  det=get_channel_sts(youtube,channel_id)
+  det=get_channel_details(youtube,channel_id)
   col=db["Channels"]
   col.insert_one(det)
-  playlist=get_playlists(youtube,channel_id)
+  playlist=get_playlists_details(youtube,channel_id)
   col=db["playlists"]
   for i in playlist:
     col.insert_one(i)
@@ -202,7 +202,7 @@ def channel_Details(channel_id):
   return ("process for a channel is completed")
 
 
-
+#Migrate the data to PostgreSQL----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def channels_table():
 
     try:
@@ -380,14 +380,16 @@ def comments_table():
                 ragul.rollback()
     except:
         st.write("values already exists in the comments table")
-    
+        
+#Creating a Function to access tables----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
 def tables():
     channels_table()
     playlists_table()
     videos_table()
     comments_table()
     return ("Completed!!")
-
+    
+#Data Visualisation zone----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def display_channels():
     db=client['warehousing']
     col=db['Channels']
@@ -421,6 +423,7 @@ def display_comments():
     tableofcomments=st.dataframe(tableofcomments)
     return tableofcomments
     
+#Analyze data ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------    
 def one():
     try:
         cursor.execute("select title as videos, channeltitle as chanel_name from videos;")
@@ -578,7 +581,7 @@ def ten():
 
 
 
-
+#Connecting Streamlit----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 st.subheader('YOU:red[TUBE] DATA :red[HARVESTING] AND WARE:red[HOUSING]',divider='blue')
 channel_id = st.text_input("Enter the Channel id to collect data")
 channels = channel_id.split(',')
@@ -617,7 +620,7 @@ elif frames=='Video':
     display_videos()
 elif frames=='Comment':
     display_comments()
-
+#Connecting Queries----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 query = st.selectbox(
     ':blue[DATA ANALYSIS]',
     ('None','1. What are the names of all the videos and their corresponding channels?', '2. Which channels have the most number of videos, and how many videos do they have?', '3. What are the top 10 most viewed videos and their respective channels?',
