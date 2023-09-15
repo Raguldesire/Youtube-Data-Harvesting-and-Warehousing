@@ -1,11 +1,14 @@
 ### Streamlit Application Interface
-![youtube png](https://github.com/Raguldesire/Youtube-Data-Harvesting-and-Warehousing/assets/136821041/3858d041-c3ae-4f32-9c11-be04fa5ffc36)
+![youtube png](https://github.com/Raguldesire/Youtube-Data-Harvesting-and-Warehousing/assets/136821041/7dd06bf4-e7fa-447a-80fb-b8e37be74641)
+
 
 
 ### MongoDB Database Interface
-![image](https://github.com/Raguldesire/Youtube-Data-Harvesting-and-Warehousing/assets/136821041/e083aab4-59fc-4cb8-94ae-5cf73311eeeb)
+![image](https://github.com/Raguldesire/Youtube-Data-Harvesting-and-Warehousing/assets/136821041/8152a254-75a3-40e3-9d39-8e57b6a2fa78)
+
 
 ### PostgreSQl interface
-Here i provide only the channel details
-![image](https://github.com/Raguldesire/Youtube-Data-Harvesting-and-Warehousing/assets/136821041/3315a506-d4c9-46c7-99f7-f98f363b090a)
+Here i provide only the playlists details 
+![image](https://github.com/Raguldesire/Youtube-Data-Harvesting-and-Warehousing/assets/136821041/98a6d95a-8522-4b45-9335-e62512e2aceb)
+
 
